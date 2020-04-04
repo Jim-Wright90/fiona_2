@@ -1,0 +1,147 @@
+---
+title: "Fiona Data"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    social: menu
+    source_code: embed
+    vertical_layout: scroll
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(rio)
+library(here)
+library(colorblindr)
+library(gghighlight)
+library(forcats)
+library(ggrepel)
+library(gt)
+library(knitr)
+library(kableExtra)
+library(reactable)
+library(plotly)
+
+opts_chunk$set(echo = FALSE,
+               fig.width = 5,
+               fig.height = 6)
+
+theme_set(theme_minimal(base_size = 8))
+
+diaper <- import(here("data", "fiona_diaper2.sav"),
+               setclass = "tbl_df") %>% 
+  characterize() %>% 
+  janitor::clean_names() 
+
+head(diaper)
+
+feed <- import(here("data", "fiona_feed2.sav"),
+               setclass = "tbl_df") %>% 
+  characterize() %>% 
+  janitor::clean_names() 
+
+head(feed)
+
+fiona <- full_join(diaper, feed)
+
+fiona_1 <- fiona %>% 
+  rename("Wet" = total_wet,
+         "Dirty" = total_dirty,
+         "Both" = total_both)
+
+fiona_tidy <- fiona_1 %>% 
+  pivot_longer(
+    c(4:6),
+    names_to = "diaper_type",
+    values_to = "total"
+  )
+
+head(fiona)
+head(fiona_tidy)
+```
+
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Total Diapers Per Day
+
+```{r diaper plot, fig.width=7}
+ggplot(fiona, aes(date, total_diaper)) +
+  geom_line(lwd = 1.6,
+            color = "gray40") +
+  geom_point(size = 2, 
+             color = "blue") +
+  geom_text_repel(aes(label = total_diaper),
+                  size = 4) +
+  scale_y_log10() +
+  theme(plot.title = element_text(color = "black", 
+                                  size = 12, 
+                                  face = "bold", 
+                                  hjust = 0.5),
+        axis.text = element_text(size = 10),
+        axis.title=element_text(size=10)) +
+  labs(x = "Date",
+       y = "Total",
+       title = "Number of Diapers per Day")
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Diaper Type
+
+```{r diaper type}
+ggplot(fiona_tidy, aes(diaper_type, total)) +
+  geom_col(fill = "blue", 
+           alpha = 0.7) +
+  coord_flip() +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.x = element_line(color = "gray80")) +
+  theme(plot.title = element_text(color = "black", size = 12, face = "bold", hjust = 0.5),
+        axis.text = element_text(size = 10),
+        axis.title=element_text(size=10),
+        strip.text = element_text(size = 10)) +
+  labs(x = "Diaper Type",
+       y = "Total",
+       title = "Number of Diaper Type") 
+
+```
+
+### Daily Averages
+
+```{r table summary clean, include=FALSE}
+head(fiona)
+
+fiona_table <- fiona %>% 
+  summarize(mean(total_diaper),
+            mean(total_wet),
+            mean(total_dirty),
+            mean(total_both),
+            mean(feedings))
+
+reactable(fiona_table)
+
+fiona_table <- fiona_table %>% 
+  rename("Total Diapers" = "mean(total_diaper)",
+         "Wet Diapers" = "mean(total_wet)",
+         "Dirty Diapers" = "mean(total_dirty)",
+         "Both Diapers" = "mean(total_both)",
+         "Feedings" = "mean(feedings)")
+
+```
+
+```{r table}
+
+reactable(fiona_table, columns = list(
+  "Total Diapers" = colDef(format = colFormat(digits = 2)),
+  "Wet Diapers" = colDef(format = colFormat(digits = 2)),
+  "Dirty Diapers" = colDef(format = colFormat(digits = 2)),
+  "Both Diapers" = colDef(format = colFormat(digits = 2)),
+  "Feedings" = colDef(format = colFormat(digits = 2))
+))
+
+```
