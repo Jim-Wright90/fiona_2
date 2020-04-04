@@ -107,41 +107,59 @@ ggplot(fiona_tidy, aes(diaper_type, total)) +
         strip.text = element_text(size = 10)) +
   labs(x = "Diaper Type",
        y = "Total",
-       title = "Number of Diaper Type") 
+       title = "Total Number of Diaper Type")
 
 ```
 
-### Daily Averages
+### Daily Statistics
 
 ```{r table summary clean, include=FALSE}
 head(fiona)
 
 fiona_table <- fiona %>% 
   summarize(mean(total_diaper),
+            sd(total_diaper),
             mean(total_wet),
             mean(total_dirty),
             mean(total_both),
-            mean(feedings))
+            mean(feedings),
+            sd(feedings))
 
 reactable(fiona_table)
 
 fiona_table <- fiona_table %>% 
-  rename("Total Diapers" = "mean(total_diaper)",
-         "Wet Diapers" = "mean(total_wet)",
-         "Dirty Diapers" = "mean(total_dirty)",
-         "Both Diapers" = "mean(total_both)",
-         "Feedings" = "mean(feedings)")
+  rename("Mean Total Diapers" = "mean(total_diaper)",
+         "SD Total Diapers" = "sd(total_diaper)",
+         "Mean Wet Diapers" = "mean(total_wet)",
+         "Mean Dirty Diapers" = "mean(total_dirty)",
+         "Mean Both Diapers" = "mean(total_both)",
+         "Mean Feedings" = "mean(feedings)",
+         "SD Feedings" = "sd(feedings)")
 
 ```
 
 ```{r table}
 
 reactable(fiona_table, columns = list(
-  "Total Diapers" = colDef(format = colFormat(digits = 2)),
-  "Wet Diapers" = colDef(format = colFormat(digits = 2)),
-  "Dirty Diapers" = colDef(format = colFormat(digits = 2)),
-  "Both Diapers" = colDef(format = colFormat(digits = 2)),
-  "Feedings" = colDef(format = colFormat(digits = 2))
+  "Mean Total Diapers" = colDef(format = colFormat(digits = 2)),
+  "SD Total Diapers" = colDef(format = colFormat(digits = 2)),
+  "Mean Wet Diapers" = colDef(format = colFormat(digits = 2)),
+  "Mean Dirty Diapers" = colDef(format = colFormat(digits = 2)),
+  "Mean Both Diapers" = colDef(format = colFormat(digits = 2)),
+  "Mean Feedings" = colDef(format = colFormat(digits = 2)),
+  "SD Feedings" = colDef(format = colFormat(digits = 2))
 ))
 
 ```
+
+
+cmt_descriptives_month <- cmt %>% 
+  group_by(referral_month, sex) %>% 
+  summarize(n=n())
+
+knitr::kable(cmt_descriptives_month,
+             caption = "Total Number of CMT Referrals by Month",
+             col.names = c("Referral Month",
+                           "Sex",
+                           "Total")) %>% 
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
