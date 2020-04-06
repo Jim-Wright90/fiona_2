@@ -76,7 +76,6 @@ ggplot(fiona, aes(date, total_diaper)) +
              color = "blue") +
   geom_text_repel(aes(label = total_diaper),
                   size = 4) +
-  scale_y_log10() +
   theme(plot.title = element_text(color = "black", 
                                   size = 12, 
                                   face = "bold", 
@@ -153,13 +152,3 @@ reactable(fiona_table, columns = list(
 ```
 
 
-cmt_descriptives_month <- cmt %>% 
-  group_by(referral_month, sex) %>% 
-  summarize(n=n())
-
-knitr::kable(cmt_descriptives_month,
-             caption = "Total Number of CMT Referrals by Month",
-             col.names = c("Referral Month",
-                           "Sex",
-                           "Total")) %>% 
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
