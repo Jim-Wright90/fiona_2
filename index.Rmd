@@ -69,7 +69,7 @@ Column {data-width=650}
 ### Total Diapers Per Day
 
 ```{r diaper plot, fig.width=7}
-ggplot(fiona, aes(date, total_diaper)) +
+plot <- ggplot(fiona, aes(date, total_diaper)) +
   geom_line(lwd = 1.6,
             color = "gray40") +
   geom_point(size = 2, 
@@ -85,6 +85,8 @@ ggplot(fiona, aes(date, total_diaper)) +
   labs(x = "Date",
        y = "Total",
        title = "Number of Diapers per Day")
+
+ggplotly(plot)
 ```
 
 Column {data-width=350}
