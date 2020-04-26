@@ -63,7 +63,7 @@ head(fiona_tidy)
 ```
 
 
-Column {data-width=650}
+Column {.tabset data-width=750}
 -----------------------------------------------------------------------
 
 ### Total Diapers Per Day
@@ -90,6 +90,105 @@ line_plot <- ggplot(fiona, aes(date, total_diaper)) +
 
 ggplotly(line_plot)
 ```
+
+### Total Both Diapers per Day 
+```{r both diaper plot data clean, include=FALSE}
+head(fiona)
+
+both_diapers <- fiona %>% 
+  select(date, total_both)
+
+```
+
+```{r both diaper plot, fig.width=7}
+both_plot <- ggplot(both_diapers, aes(date, total_both)) +
+  geom_line(lwd = 1.6,
+            color = "gray80") +
+  geom_area(fill = "cornflowerblue",
+            alpha = 0.3) +
+  geom_point(size = 2, 
+             color = "magenta") +
+  geom_text_repel(aes(label = total_both),
+                  size = 4) +
+  theme(plot.title = element_text(color = "black", 
+                                  size = 12, 
+                                  face = "bold", 
+                                  hjust = 0.5),
+        axis.text = element_text(size = 10),
+        axis.title=element_text(size=10)) +
+  labs(x = "Date",
+       y = "Total",
+       title = "Number of Both Diapers per Day")
+
+ggplotly(both_plot)
+```
+
+
+### Total Wet Diapers per Day 
+```{r wet diaper plot data clean, include=FALSE}
+head(fiona)
+
+wet_diapers <- fiona %>% 
+  select(date, total_wet)
+
+```
+
+```{r wet diaper plot, fig.width=7}
+wet_plot <- ggplot(wet_diapers, aes(date, total_wet)) +
+  geom_line(lwd = 1.6,
+            color = "gray80") +
+  geom_area(fill = "cornflowerblue",
+            alpha = 0.3) +
+  geom_point(size = 2, 
+             color = "magenta") +
+  geom_text_repel(aes(label = total_wet),
+                  size = 4) +
+  theme(plot.title = element_text(color = "black", 
+                                  size = 12, 
+                                  face = "bold", 
+                                  hjust = 0.5),
+        axis.text = element_text(size = 10),
+        axis.title=element_text(size=10)) +
+  labs(x = "Date",
+       y = "Total",
+       title = "Number of Wet Diapers per Day")
+
+ggplotly(wet_plot)
+```
+
+
+### Total Dirty Diapers per Day 
+```{r dirty diaper plot data clean, include=FALSE}
+head(fiona)
+
+dirty_diapers <- fiona %>% 
+  select(date, total_dirty)
+
+```
+
+```{r dirty diaper plot, fig.width=7}
+dirty_plot <- ggplot(dirty_diapers, aes(date, total_dirty)) +
+  geom_line(lwd = 1.6,
+            color = "gray80") +
+  geom_area(fill = "cornflowerblue",
+            alpha = 0.3) +
+  geom_point(size = 2, 
+             color = "magenta") +
+  geom_text_repel(aes(label = total_dirty),
+                  size = 4) +
+  theme(plot.title = element_text(color = "black", 
+                                  size = 12, 
+                                  face = "bold", 
+                                  hjust = 0.5),
+        axis.text = element_text(size = 10),
+        axis.title=element_text(size=10)) +
+  labs(x = "Date",
+       y = "Total",
+       title = "Number of Dirty Diapers per Day")
+
+ggplotly(dirty_plot)
+```
+
 
 Column {data-width=350}
 -----------------------------------------------------------------------
