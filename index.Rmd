@@ -72,6 +72,8 @@ Column {.tabset data-width=750}
 line_plot <- ggplot(fiona, aes(date, total_diaper)) +
   geom_line(lwd = 1.6,
             color = "gray80") +
+  scale_y_continuous(limits = c(0, 16),
+                     breaks = c(0, 2, 4, 6, 8, 10, 12, 14, 16)) +
   geom_area(fill = "cornflowerblue",
             alpha = 0.3) +
   geom_point(size = 2, 
@@ -104,6 +106,8 @@ both_diapers <- fiona %>%
 both_plot <- ggplot(both_diapers, aes(date, total_both)) +
   geom_line(lwd = 1.6,
             color = "gray80") +
+  scale_y_continuous(limits = c(0, 16),
+                     breaks = c(0, 2, 4, 6, 8, 10, 12, 14, 16)) +
   geom_area(fill = "cornflowerblue",
             alpha = 0.3) +
   geom_point(size = 2, 
@@ -137,6 +141,8 @@ wet_diapers <- fiona %>%
 wet_plot <- ggplot(wet_diapers, aes(date, total_wet)) +
   geom_line(lwd = 1.6,
             color = "gray80") +
+  scale_y_continuous(limits = c(0, 16),
+                     breaks = c(0, 2, 4, 6, 8, 10, 12, 14, 16)) +
   geom_area(fill = "cornflowerblue",
             alpha = 0.3) +
   geom_point(size = 2, 
@@ -170,6 +176,8 @@ dirty_diapers <- fiona %>%
 dirty_plot <- ggplot(dirty_diapers, aes(date, total_dirty)) +
   geom_line(lwd = 1.6,
             color = "gray80") +
+  scale_y_continuous(limits = c(0, 16),
+                     breaks = c(0, 2, 4, 6, 8, 10, 12, 14, 16)) +
   geom_area(fill = "cornflowerblue",
             alpha = 0.3) +
   geom_point(size = 2, 
