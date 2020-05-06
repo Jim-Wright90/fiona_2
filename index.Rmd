@@ -230,14 +230,10 @@ diaper_tidy <- diapers_2 %>%
 ```
 
 ```{r diaper type}
-ggplot(diaper_tidy, aes(diaper_type, total)) +
+dplot <- ggplot(diaper_tidy, aes(diaper_type, total)) +
   geom_col(fill = "blue", 
            alpha = 0.7) +
   coord_flip() +
-  geom_text(aes(label = total),
-            hjust = 1.5,
-            size = 4,
-            color = "white") +
   theme(panel.grid.major.y = element_blank(),
         panel.grid.minor.x = element_blank(),
         panel.grid.major.x = element_line(color = "gray80")) +
@@ -248,6 +244,8 @@ ggplot(diaper_tidy, aes(diaper_type, total)) +
   labs(x = "Diaper Type",
        y = "Total",
        title = "Total Number of Diaper Type")
+
+ggplotly(dplot)
 
 ```
 
