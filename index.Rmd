@@ -227,13 +227,19 @@ diaper_tidy <- diapers_2 %>%
     names_to = "diaper_type",
     values_to = "total"
   )
+
+diaper_position <- c("Wet", "Dirty", "Both")
 ```
 
 ```{r diaper type}
 dplot <- ggplot(diaper_tidy, aes(diaper_type, total)) +
   geom_col(fill = "blue", 
            alpha = 0.7) +
-  coord_flip() +
+  scale_x_discrete(limits = diaper_position) +
+  geom_text(aes(label = total),
+             position = position_stack(vjust = 0.5),
+            color = "white",
+            size = 5) +
   theme(panel.grid.major.y = element_blank(),
         panel.grid.minor.x = element_blank(),
         panel.grid.major.x = element_line(color = "gray80")) +
