@@ -236,6 +236,8 @@ dplot <- ggplot(diaper_tidy, aes(diaper_type, total)) +
   geom_col(fill = "blue", 
            alpha = 0.7) +
   scale_x_discrete(limits = diaper_position) +
+  scale_y_continuous(limits = c(0, 1000),
+                     breaks = c(0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000)) +
   geom_text(aes(label = total),
              position = position_stack(vjust = 0.5),
             color = "white",
