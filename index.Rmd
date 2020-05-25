@@ -51,6 +51,8 @@ fiona_1 <- fiona %>%
          "Dirty" = total_dirty,
          "Both" = total_both)
 
+head(fiona_1)
+
 fiona_tidy <- fiona_1 %>% 
   pivot_longer(
     c(4:6),
