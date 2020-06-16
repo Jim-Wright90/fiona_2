@@ -289,17 +289,18 @@ fiona_table <- fiona_table %>%
 ```{r table}
 
 reactable(fiona_table, columns = list(
-  "Mean Total Diapers" = colDef(format = colFormat(digits = 2)),
-  "SD Total Diapers" = colDef(format = colFormat(digits = 2)),
-  "Mean Wet Diapers" = colDef(format = colFormat(digits = 2)),
-  "Mean Dirty Diapers" = colDef(format = colFormat(digits = 2)),
-  "Mean Both Diapers" = colDef(format = colFormat(digits = 2)),
-  "Mean Feedings" = colDef(format = colFormat(digits = 2)),
-  "SD Feedings" = colDef(format = colFormat(digits = 2))),
+  "Mean Total Diapers" = colDef(format = colFormat(digits = 2, suffix = " diapers")),
+  "SD Total Diapers" = colDef(format = colFormat(digits = 2, suffix = " diapers")),
+  "Mean Wet Diapers" = colDef(format = colFormat(digits = 2, suffix = " diapers")),
+  "Mean Dirty Diapers" = colDef(format = colFormat(digits = 2, suffix = " diapers")),
+  "Mean Both Diapers" = colDef(format = colFormat(digits = 2, suffix = " diapers")),
+  "Mean Feedings" = colDef(format = colFormat(digits = 2, suffix = " feedings")),
+  "SD Feedings" = colDef(format = colFormat(digits = 2, suffix = " feedings"))),
   height = 500,
   striped = TRUE,
   compact = TRUE,
-  outlined = TRUE)
+  outlined = TRUE,
+  bordered = TRUE)
 ```
 
 
