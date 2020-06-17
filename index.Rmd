@@ -200,10 +200,10 @@ ggplotly(dirty_plot)
 ```
 
 
-Column {data-width=350}
+Column {.tabset data-width=350}
 -----------------------------------------------------------------------
 
-### Diaper Type
+### Diaper Type Plot
 ```{r diaper type data cleaning, include=FALSE}
 head(fiona_tidy)
 head(fiona_1)
@@ -259,48 +259,82 @@ ggplotly(dplot)
 
 ```
 
-### Daily Statistics
+### Daily Total Diaper Statistics
 
 ```{r table summary clean, include=FALSE}
 head(fiona)
 
-fiona_table <- fiona %>% 
-  summarize(mean(total_diaper),
-            sd(total_diaper),
-            mean(total_wet),
-            mean(total_dirty),
-            mean(total_both),
-            mean(feedings),
-            sd(feedings))
-
-reactable(fiona_table)
-
-fiona_table <- fiona_table %>% 
-  rename("Mean Total Diapers" = "mean(total_diaper)",
-         "SD Total Diapers" = "sd(total_diaper)",
-         "Mean Wet Diapers" = "mean(total_wet)",
-         "Mean Dirty Diapers" = "mean(total_dirty)",
-         "Mean Both Diapers" = "mean(total_both)",
-         "Mean Feedings" = "mean(feedings)",
-         "SD Feedings" = "sd(feedings)")
-
-```
-
-```{r table}
-
-reactable(fiona_table, columns = list(
-  "Mean Total Diapers" = colDef(format = colFormat(digits = 2, suffix = " diapers")),
-  "SD Total Diapers" = colDef(format = colFormat(digits = 2, suffix = " diapers")),
-  "Mean Wet Diapers" = colDef(format = colFormat(digits = 2, suffix = " diapers")),
-  "Mean Dirty Diapers" = colDef(format = colFormat(digits = 2, suffix = " diapers")),
-  "Mean Both Diapers" = colDef(format = colFormat(digits = 2, suffix = " diapers")),
-  "Mean Feedings" = colDef(format = colFormat(digits = 2, suffix = " feedings")),
-  "SD Feedings" = colDef(format = colFormat(digits = 2, suffix = " feedings"))),
+diaper_react <- function(df, var) {
+    df %>% 
+      summarize(`Daily Mean` = mean({{var}}),
+                `Daily SD` = sd({{var}}),
+                `Daily Min` = min({{var}}),
+                `Daily Max` = max({{var}}),
+                Total = sum({{var}})) %>% 
+      mutate_if(is.numeric, round, 2) %>% 
+      reactable(columns = list(
+        `Daily Mean` = colDef(format = colFormat(separators = TRUE, suffix = " diapers")),
+        `Daily SD` = colDef(format = colFormat(separators = TRUE, suffix = " diapers")),
+        `Daily Min` = colDef(format = colFormat(separators = TRUE, suffix = " diapers")),
+        `Daily Max` = colDef(format = colFormat(separators = TRUE, suffix = " diapers")),
+        Total = colDef(format = colFormat(separators = TRUE, suffix = " diapers"))),
   height = 500,
   striped = TRUE,
   compact = TRUE,
   outlined = TRUE,
   bordered = TRUE)
+}
+
+diaper_react(fiona, total_diaper)
+diaper_react(fiona, total_wet)
+diaper_react(fiona, total_dirty)
+diaper_react(fiona, total_both)
+
+feedings_react <- function(df, var) {
+    df %>% 
+      summarize(`Daily Mean` = mean({{var}}),
+                `Daily SD` = sd({{var}}),
+                `Daily Min` = min({{var}}),
+                `Daily Max` = max({{var}}),
+                Total = sum({{var}})) %>% 
+      mutate_if(is.numeric, round, 2) %>% 
+      reactable(columns = list(
+        `Daily Mean` = colDef(format = colFormat(separators = TRUE, suffix = " feedings")),
+        `Daily SD` = colDef(format = colFormat(separators = TRUE, suffix = " feedings")),
+        `Daily Min` = colDef(format = colFormat(separators = TRUE, suffix = " feedings")),
+        `Daily Max` = colDef(format = colFormat(separators = TRUE, suffix = " feedings")),
+        Total = colDef(format = colFormat(separators = TRUE, suffix = " feedings"))),
+  height = 500,
+  striped = TRUE,
+  compact = TRUE,
+  outlined = TRUE,
+  bordered = TRUE)
+}
+
+feedings_react(fiona, feedings)
+
 ```
 
+```{r}
+diaper_react(fiona, total_diaper)
+```
 
+### Daily Wet Diaper Statistics
+```{r}
+diaper_react(fiona, total_wet)
+```
+
+### Daily Dirty Diaper Statistics
+```{r}
+diaper_react(fiona, total_dirty)
+```
+
+### Daily Both Diaper Statistics
+```{r}
+diaper_react(fiona, total_both)
+```
+
+### Daily Feedings Statistics 
+```{r}
+feedings_react(fiona, feedings)
+```
