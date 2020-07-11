@@ -30,16 +30,14 @@ opts_chunk$set(echo = FALSE,
 
 theme_set(theme_minimal(base_size = 8))
 
-diaper <- import(here("data", "fiona_diaper2.sav"),
+diaper <- import(here("data", "fiona_diaper.xlsx"),
                setclass = "tbl_df") %>% 
-  characterize() %>% 
   janitor::clean_names() 
 
 head(diaper)
 
-feed <- import(here("data", "fiona_feed2.sav"),
+feed <- import(here("data", "fiona_feed.xlsx"),
                setclass = "tbl_df") %>% 
-  characterize() %>% 
   janitor::clean_names() 
 
 head(feed)
