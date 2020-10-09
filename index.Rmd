@@ -60,6 +60,12 @@ fiona_tidy <- fiona_1 %>%
 
 head(fiona)
 head(fiona_tidy)
+
+str(fiona)
+
+fiona$date <- as.Date(fiona$date, format = "%Y-%m-%d")
+
+str(fiona)
 ```
 
 
@@ -72,6 +78,8 @@ Column {.tabset data-width=750}
 line_plot <- ggplot(fiona, aes(date, total_diaper)) +
   geom_line(lwd = 1.6,
             color = "gray80") +
+  scale_x_date(date_breaks = "1 month",
+               date_labels = "%B") +
   scale_y_continuous(limits = c(0, 16),
                      breaks = c(0, 2, 4, 6, 8, 10, 12, 14, 16)) +
   geom_area(fill = "cornflowerblue",
