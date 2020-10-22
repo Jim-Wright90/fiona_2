@@ -30,6 +30,10 @@ opts_chunk$set(echo = FALSE,
 
 theme_set(theme_minimal(base_size = 10))
 
+fiona <- import(here("data", "fiona_all.xlsx"),
+                setclass = "tbl_df") %>% 
+  janitor::clean_names()
+
 diaper <- import(here("data", "fiona_diaper.xlsx"),
                setclass = "tbl_df") %>% 
   janitor::clean_names() 
@@ -42,7 +46,7 @@ feed <- import(here("data", "fiona_feed.xlsx"),
 
 head(feed)
 
-fiona <- full_join(diaper, feed)
+#fiona <- full_join(diaper, feed)
 
 fiona_1 <- fiona %>% 
   rename("Wet" = total_wet,
