@@ -209,6 +209,39 @@ dirty_plot <- ggplot(dirty_diapers, aes(date, total_dirty)) +
 ggplotly(dirty_plot)
 ```
 
+### Total Feedings per Day 
+```{r, include=FALSE}
+head(fiona)
+
+feedings <- fiona %>% 
+  select(date, feedings)
+
+```
+
+```{r, fig.width=7}
+feedings_plot <- ggplot(feedings, aes(date, feedings)) +
+  geom_line(lwd = 1.6,
+            color = "gray80") +
+  scale_y_continuous(limits = c(0, 16),
+                     breaks = c(0, 2, 4, 6, 8, 10, 12, 14, 16)) +
+  geom_area(fill = "cornflowerblue",
+            alpha = 0.3) +
+  geom_point(size = 2, 
+             color = "magenta") +
+  geom_text_repel(aes(label = feedings),
+                  size = 4) +
+  theme(plot.title = element_text(color = "black", 
+                                  size = 12, 
+                                  face = "bold", 
+                                  hjust = 0.5),
+        axis.text = element_text(size = 10),
+        axis.title=element_text(size=10)) +
+  labs(x = "Date",
+       y = "Total",
+       title = "Number of Feedings per Day")
+
+ggplotly(feedings_plot)
+```
 
 Column {.tabset data-width=350}
 -----------------------------------------------------------------------
