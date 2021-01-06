@@ -82,8 +82,8 @@ Column {.tabset data-width=750}
 line_plot <- ggplot(fiona, aes(date, total_diaper)) +
   geom_line(lwd = 1.6,
             color = "gray80") +
-  scale_x_date(date_breaks = "1 month",
-               date_labels = "%B") +
+  scale_x_date(date_breaks = "3 months",
+               date_labels = "%b %Y") +
   scale_y_continuous(limits = c(0, 16),
                      breaks = c(0, 2, 4, 6, 8, 10, 12, 14, 16)) +
   geom_area(fill = "cornflowerblue",
@@ -118,8 +118,8 @@ both_diapers <- fiona %>%
 both_plot <- ggplot(both_diapers, aes(date, total_both)) +
   geom_line(lwd = 1.6,
             color = "gray80") +
-  scale_x_date(date_breaks = "1 month",
-               date_labels = "%B") +
+  scale_x_date(date_breaks = "3 months",
+               date_labels = "%b %Y") +
   scale_y_continuous(limits = c(0, 16),
                      breaks = c(0, 2, 4, 6, 8, 10, 12, 14, 16)) +
   geom_area(fill = "cornflowerblue",
@@ -155,8 +155,8 @@ wet_diapers <- fiona %>%
 wet_plot <- ggplot(wet_diapers, aes(date, total_wet)) +
   geom_line(lwd = 1.6,
             color = "gray80") +
-  scale_x_date(date_breaks = "1 month",
-               date_labels = "%B") +
+  scale_x_date(date_breaks = "3 months",
+               date_labels = "%b %Y") +
   scale_y_continuous(limits = c(0, 16),
                      breaks = c(0, 2, 4, 6, 8, 10, 12, 14, 16)) +
   geom_area(fill = "cornflowerblue",
@@ -192,8 +192,8 @@ dirty_diapers <- fiona %>%
 dirty_plot <- ggplot(dirty_diapers, aes(date, total_dirty)) +
   geom_line(lwd = 1.6,
             color = "gray80") +
-  scale_x_date(date_breaks = "1 month",
-               date_labels = "%B") +
+  scale_x_date(date_breaks = "3 months",
+               date_labels = "%b %Y") +
   scale_y_continuous(limits = c(0, 16),
                      breaks = c(0, 2, 4, 6, 8, 10, 12, 14, 16)) +
   geom_area(fill = "cornflowerblue",
@@ -228,8 +228,8 @@ feedings <- fiona %>%
 feedings_plot <- ggplot(feedings, aes(date, feedings)) +
   geom_line(lwd = 1.6,
             color = "gray80") +
-  scale_x_date(date_breaks = "1 month",
-               date_labels = "%B") +
+  scale_x_date(date_breaks = "3 months",
+               date_labels = "%b %Y") +
   scale_y_continuous(limits = c(0, 16),
                      breaks = c(0, 2, 4, 6, 8, 10, 12, 14, 16)) +
   geom_area(fill = "cornflowerblue",
@@ -302,7 +302,7 @@ dplot <- ggplot(diaper_tidy, aes(diaper_type, total)) +
         axis.text = element_text(size = 10),
         axis.title=element_text(size=10),
         strip.text = element_text(size = 10)) +
-  labs(x = "Diaper Type",
+  labs(x = "",
        y = "Total",
        title = "Total Number of Diaper Type")
 
